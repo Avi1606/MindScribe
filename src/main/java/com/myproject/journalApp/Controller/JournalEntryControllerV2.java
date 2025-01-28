@@ -34,14 +34,13 @@ public class JournalEntryControllerV2 {
     }
 
     @GetMapping("id/{MyId}")
-    public JournalEntry findbyid(@PathVariable String MyId) {
-        return ServiceEntry.FindById(new ObjectId(MyId))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found"));
+    public JournalEntry findbyid(@PathVariable ObjectId MyId) {
+        return ServiceEntry.FindById(MyId).orElse(null);
     }
 
     @DeleteMapping("id/{MyId}")
-    public boolean deletebyid(@PathVariable String MyId) {
-        ServiceEntry.DeleteById(new ObjectId(MyId));
+    public boolean deletebyid(@PathVariable ObjectId MyId) {
+        ServiceEntry.DeleteById(MyId);
         return true;
     }
 
