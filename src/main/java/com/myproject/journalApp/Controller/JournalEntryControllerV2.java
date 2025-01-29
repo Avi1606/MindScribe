@@ -3,6 +3,7 @@ package com.myproject.journalApp.Controller;
 import com.fasterxml.jackson.databind.ser.impl.ObjectIdWriter;
 import com.myproject.journalApp.Services.JournalEntryServices;
 import com.myproject.journalApp.entity.JournalEntry;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/journal")
 public class JournalEntryControllerV2 {
@@ -35,6 +37,8 @@ public class JournalEntryControllerV2 {
 
     @GetMapping("id/{MyId}")
     public JournalEntry findbyid(@PathVariable ObjectId MyId) {
+        Optional<JournalEntry> entry = ServiceEntry.FindById(MyId);
+        log.info("Journal Entry : " + entry.toString());
         return ServiceEntry.FindById(MyId).orElse(null);
     }
 

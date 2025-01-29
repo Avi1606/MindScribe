@@ -2,6 +2,7 @@ package com.myproject.journalApp.Services;
 
 import com.myproject.journalApp.JournalRepository.JournalRepository;
 import com.myproject.journalApp.entity.JournalEntry;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Slf4j
 @Component
 public class JournalEntryServices {
 
@@ -26,6 +28,8 @@ public class JournalEntryServices {
     }
 
     public Optional<JournalEntry> FindById(ObjectId id) {
+//        System.out.println("ID is : " + id);
+        log.info("Received data : " + JournalEntryRepo.findById(id));
         return JournalEntryRepo.findById(id);
     }
 
