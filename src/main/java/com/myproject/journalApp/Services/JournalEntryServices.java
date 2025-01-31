@@ -2,6 +2,7 @@ package com.myproject.journalApp.Services;
 
 import com.myproject.journalApp.JournalRepository.JournalRepository;
 import com.myproject.journalApp.entity.JournalEntry;
+import com.myproject.journalApp.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,15 @@ public class JournalEntryServices {
     @Autowired
     private JournalRepository JournalEntryRepo;
 
+    @Autowired
+    private UserServices userservices;
 
-    public void SaveEntry(JournalEntry Entry) {
-        JournalEntryRepo.save(Entry);
+
+    public void SaveEntry(JournalEntry Entry, String username) {
+        User user  = userservices.findbyuserName(username);
+        JournalEntry saved = JournalEntryRepo.save(Entry);
+        user.getJournalEntries().add(saved);
+        userservices.SaveUser(user);
     }
 
     public List<JournalEntry> GettAll() {
@@ -33,8 +40,11 @@ public class JournalEntryServices {
         return JournalEntryRepo.findById(id);
     }
 
-    public void DeleteById(ObjectId id) {
-         JournalEntryRepo.deleteById(id);
+    public void DeleteById(ObjectId id, String username) {
+        User user = userservices.findbyuserName(username);
+        user.getJournalEntries().removeIf(journalentry -> journalentry.equals(id));// lambda expression that removes the entry with the given id
+        userservices.SaveUser(user);
+        JournalEntryRepo.deleteById(id);
     }
 
     public void DeleteAll() {
