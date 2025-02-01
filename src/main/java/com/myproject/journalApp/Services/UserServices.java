@@ -1,7 +1,7 @@
 package com.myproject.journalApp.Services;
 
 import com.myproject.journalApp.Repository.UserRepository;
-import com.myproject.journalApp.Entity.User;
+import com.myproject.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

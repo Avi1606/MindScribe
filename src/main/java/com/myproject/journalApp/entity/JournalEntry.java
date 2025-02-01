@@ -1,4 +1,4 @@
-package com.myproject.journalApp.Entity;
+package com.myproject.journalApp.entity;
 
 import lombok.Data;
 import org.bson.types.ObjectId;

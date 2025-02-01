@@ -2,8 +2,8 @@ package com.myproject.journalApp.Controllers;
 
 import com.myproject.journalApp.Services.JournalEntryServices;
 import com.myproject.journalApp.Services.UserServices;
-import com.myproject.journalApp.Entity.JournalEntry;
-import com.myproject.journalApp.Entity.User;
+import com.myproject.journalApp.entity.JournalEntry;
+import com.myproject.journalApp.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

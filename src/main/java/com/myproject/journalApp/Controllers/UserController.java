@@ -2,12 +2,11 @@ package com.myproject.journalApp.Controllers;
 
 
 import com.myproject.journalApp.Services.UserServices;
-import com.myproject.journalApp.Entity.User;
+import com.myproject.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
