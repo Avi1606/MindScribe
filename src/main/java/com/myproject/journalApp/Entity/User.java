@@ -1,14 +1,11 @@
-package com.myproject.journalApp.entity;
+package com.myproject.journalApp.Entity;
 
 import lombok.Data;
-import lombok.NonNull;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;

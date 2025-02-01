@@ -1,12 +1,13 @@
 package com.myproject.journalApp.Services;
 
-import com.myproject.journalApp.JournalRepository.JournalRepository;
-import com.myproject.journalApp.entity.JournalEntry;
-import com.myproject.journalApp.entity.User;
+import com.myproject.journalApp.Repository.JournalRepository;
+import com.myproject.journalApp.Entity.JournalEntry;
+import com.myproject.journalApp.Entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class JournalEntryServices {
+public class    JournalEntryServices {
 
     @Autowired
     private JournalRepository JournalEntryRepo;
@@ -22,12 +23,21 @@ public class JournalEntryServices {
     @Autowired
     private UserServices userservices;
 
-
+    @Transactional
     public void SaveEntry(JournalEntry Entry, String username) {
-        User user  = userservices.findbyuserName(username);
-        JournalEntry saved = JournalEntryRepo.save(Entry);
-        user.getJournalEntries().add(saved);
-        userservices.SaveUser(user);
+        try {
+            User user = userservices.findbyuserName(username);
+            JournalEntry saved = JournalEntryRepo.save(Entry);
+            user.getJournalEntries().add(saved);
+            user.setUsername(null);
+            userservices.SaveUser(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while saving the entry",e);
+        }
+    }
+
+    public void SaveEntry(JournalEntry journalentry) {
+        JournalEntryRepo.save(journalentry);
     }
 
     public List<JournalEntry> GettAll() {
@@ -36,7 +46,7 @@ public class JournalEntryServices {
 
     public Optional<JournalEntry> FindById(ObjectId id) {
 //        System.out.println("ID is : " + id);
-        log.info("Received data : " + JournalEntryRepo.findById(id));
+        //log.info("Received data : " + JournalEntryRepo.findById(id));
         return JournalEntryRepo.findById(id);
     }
 
