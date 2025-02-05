@@ -19,12 +19,13 @@ public class User {
     private ObjectId id;
 
     @Indexed(unique = true)
-    private String username;  // Remove @NonNull from here
+    private String username;
 
-    private String password;  // Remove @NonNull from here
-
+    private String password;
     @DBRef
-    private List<JournalEntry> journalEntries = new ArrayList<>();  // Fixed capitalization
+    private List<JournalEntry> journalEntries = new ArrayList<>();
+
+    private List<String> roles;
 
     // Add a constructor for required fields
     public User(String username, String password) {

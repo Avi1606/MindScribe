@@ -4,9 +4,10 @@ import com.myproject.journalApp.Repository.UserRepository;
 import com.myproject.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,33 +15,38 @@ import java.util.Optional;
 public class UserServices {
 
     @Autowired
-    UserRepository userrepository ;
+    UserRepository userRepository;
+
+
+    PasswordEncoder passwordEncoder;
 
     public void SaveUser(User user) {
-        userrepository.save(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER"));
+        userRepository.save(user);
     }
 
     public List<User> getalluser() {
-        return userrepository.findAll();
+        return userRepository.findAll();
     }
 
     public Optional<User> getbyid(ObjectId id) {
 
-        return userrepository.findById(id);
+        return userRepository.findById(id);
     }
 
     public boolean deleteall() {
-        userrepository.deleteAll();
+        userRepository.deleteAll();
         return true;
     }
 
     public boolean deletebyid(ObjectId id) {
-        userrepository.deleteById(id);
+        userRepository.deleteById(id);
         return true;
     }
 
     public User findbyuserName(String Username) {
-        return userrepository.findByUsername(Username);
+        return userRepository.findByUsername(Username);
     }
 
 }
