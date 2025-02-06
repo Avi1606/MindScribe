@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class    JournalEntryServices {
+public class JournalEntryServices {
 
     @Autowired
     private JournalRepository JournalEntryRepo;

@@ -34,13 +34,13 @@ public class UserController {
             userindb.setUsername(user.getUsername());
             userservices.SaveUser(userindb);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("User Successfully Updated",HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping
     public ResponseEntity<?> deletebyid() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUsername(authentication.getName());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("User Successfully Deleted",HttpStatus.ACCEPTED);
     }
 }

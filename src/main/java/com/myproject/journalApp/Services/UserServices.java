@@ -17,7 +17,7 @@ public class UserServices {
     @Autowired
     UserRepository userRepository;
 
-
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     public void SaveUser(User user) {
