@@ -9,6 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -27,8 +29,10 @@ public class JournalEntryController {
     private UserServices userservices;
 
 
-    @GetMapping("{username}")
-    public ResponseEntity<?> GetAllJournalEntriesOfUser(@PathVariable String username) {
+    @GetMapping
+    public ResponseEntity<?> GetAllJournalEntriesOfUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         User user = userservices.findbyuserName(username);
         List<JournalEntry> entries = user.getJournalEntries();
 
@@ -40,14 +44,16 @@ public class JournalEntryController {
     }
 
 
-    @PostMapping("{username}")
-    public ResponseEntity<?> create(@RequestBody JournalEntry entry , @PathVariable String username) {
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody JournalEntry entry) {
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
             entry.setDate(LocalDateTime.now());
             ServiceEntry.SaveEntry(entry ,username);
-            return new ResponseEntity<>(entry, HttpStatus.CREATED);
+            return new ResponseEntity<>("Successfully Created Entry", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Something Wrong",HttpStatus.BAD_REQUEST);
         }
     }
 
