@@ -6,7 +6,6 @@ import com.myproject.journalApp.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,14 +29,13 @@ public class JournalEntryServices {
             User user = userservices.findbyuserName(username);
             JournalEntry saved = JournalEntryRepo.save(Entry);
             user.getJournalEntries().add(saved);
-            user.setUsername(null);
             userservices.SaveUser(user);
         } catch (Exception e) {
             throw new RuntimeException("Error while saving the entry",e);
         }
     }
 
-    public void SaveEntry(JournalEntry journalentry) {
+    public void SaveEntry(JournalEntry journalentry) { //save the existing user
         JournalEntryRepo.save(journalentry);
     }
 
@@ -54,7 +52,7 @@ public class JournalEntryServices {
     public void DeleteById(ObjectId id, String username) {
         User user = userservices.findbyuserName(username);
         user.getJournalEntries().removeIf(journalentry -> journalentry.equals(id));// lambda expression that removes the entry with the given id
-        userservices.SaveUser(user);
+        userservices.SaveNewUser(user);
         JournalEntryRepo.deleteById(id);
     }
 

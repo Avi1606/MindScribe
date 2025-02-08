@@ -20,11 +20,16 @@ public class UserServices {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public void SaveUser(User user) {
+    public void SaveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);
     }
+
+    public void SaveUser(User user) {
+        userRepository.save(user);
+    }
+
 
     public List<User> getalluser() {
         return userRepository.findAll();

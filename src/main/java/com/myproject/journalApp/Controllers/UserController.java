@@ -4,15 +4,12 @@ package com.myproject.journalApp.Controllers;
 import com.myproject.journalApp.Repository.UserRepository;
 import com.myproject.journalApp.Services.UserServices;
 import com.myproject.journalApp.entity.User;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -32,7 +29,7 @@ public class UserController {
         if (userindb != null) {
             userindb.setPassword(user.getPassword());
             userindb.setUsername(user.getUsername());
-            userservices.SaveUser(userindb);
+            userservices.SaveNewUser(userindb);
         }
         return new ResponseEntity<>("User Successfully Updated",HttpStatus.ACCEPTED);
     }

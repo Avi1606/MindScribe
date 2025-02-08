@@ -20,7 +20,7 @@ public class PublicController {
 
     @PostMapping("/create-user")
     public ResponseEntity<?> UserCreate(@RequestBody User user) {
-        userServices.SaveUser(user);
+        userServices.SaveNewUser(user);
         return new ResponseEntity<>("User Successfully Created", HttpStatus.CREATED);
     }
 }
