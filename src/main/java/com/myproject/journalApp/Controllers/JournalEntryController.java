@@ -29,6 +29,18 @@ public class JournalEntryController {
     @Autowired
     private UserServices userServices;
 
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody JournalEntry entry) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            entry.setDate(LocalDateTime.now());
+            journalEntryServices.SaveEntry(entry ,username);
+            return new ResponseEntity<>("Successfully Created Entry", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something Wrong",HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<?> GetAllJournalEntriesOfUser() {
@@ -60,38 +72,17 @@ public class JournalEntryController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody JournalEntry entry) {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-            entry.setDate(LocalDateTime.now());
-            journalEntryServices.SaveEntry(entry ,username);
-            return new ResponseEntity<>("Successfully Created Entry", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something Wrong",HttpStatus.BAD_REQUEST);
+    @DeleteMapping("id/{MyId}")
+    public ResponseEntity<?> deletebyid(@PathVariable ObjectId MyId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        boolean returnvalue = journalEntryServices.DeleteById(MyId,username);
+        if (returnvalue) {
+            return new ResponseEntity<>("Successfully Deleted Entry",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Entry Not Found", HttpStatus.NOT_FOUND);
         }
     }
-
-
-
-
-    @DeleteMapping("id/{username}/{MyId}")
-    public boolean deletebyid(
-            @PathVariable ObjectId MyId,
-            @PathVariable String username) {
-
-        journalEntryServices.DeleteById(MyId,username);
-        return true;
-    }
-
-
-    @DeleteMapping
-    public boolean deletall() {
-        journalEntryServices.DeleteAll();
-        return true;
-    }
-
 
     @PutMapping("id/{username}/{MyId}")
     public ResponseEntity<?> update(
@@ -110,6 +101,16 @@ public class JournalEntryController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
+    @DeleteMapping
+    public boolean deletall() {
+        journalEntryServices.DeleteAll();
+        return true;
+    }
+
+
+
 
 
 

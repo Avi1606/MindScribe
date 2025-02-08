@@ -49,11 +49,19 @@ public class JournalEntryServices {
         return JournalEntryRepo.findById(id);
     }
 
-    public void DeleteById(ObjectId id, String username) {
-        User user = userservices.findbyuserName(username);
-        user.getJournalEntries().removeIf(journalentry -> journalentry.equals(id));// lambda expression that removes the entry with the given id
-        userservices.SaveNewUser(user);
-        JournalEntryRepo.deleteById(id);
+    public boolean DeleteById(ObjectId id, String username) {
+        boolean removed = false;
+        try {
+            User user = userservices.findbyuserName(username);
+            removed = user.getJournalEntries().removeIf(journalentry -> journalentry.equals(id));// lambda expression that removes the entry with the given id
+            if (removed) {
+                userservices.SaveUser(user);
+                JournalEntryRepo.deleteById(id);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("An Error Occurred While Deleting",e);
+        }
+        return removed;
     }
 
     public void DeleteAll() {
