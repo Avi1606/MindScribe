@@ -27,6 +27,8 @@
 		<url/>
 	</scm>
 	<properties>
+		<sonar.organization>journal-appp</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<java.version>17</java.version>
 		<sonar.token>sqa_dd261d697f55fc3cd2ac1bb3c582fac36f003dbc</sonar.token>
 	</properties>
