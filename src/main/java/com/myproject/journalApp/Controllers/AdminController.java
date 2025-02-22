@@ -3,6 +3,7 @@ package com.myproject.journalApp.Controllers;
 import com.mongodb.spi.dns.DnsWithResponseCodeException;
 import com.myproject.journalApp.Repository.UserRepository;
 import com.myproject.journalApp.Services.UserServices;
+import com.myproject.journalApp.cache.AppCache;
 import com.myproject.journalApp.entity.User;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class AdminController {
     @Autowired
     UserServices userServices;
 
+    @Autowired
+    AppCache appCache;
+
     @GetMapping("get-alluser")
     public ResponseEntity<?> getall() {
         List<User> getalluser = userServices.getalluser();
@@ -32,5 +36,11 @@ public class AdminController {
     public ResponseEntity<?> create(@RequestBody User user) {
         userServices.SaveAdmin(user);
         return new ResponseEntity<>("Successfully Created Admin", HttpStatus.CREATED);
+    }
+
+    @GetMapping("clear-app-cache")
+    public ResponseEntity<?> clearcache() {
+        appCache.init();
+        return new ResponseEntity<>("Cache Cleaned", HttpStatus.OK);
     }
 }

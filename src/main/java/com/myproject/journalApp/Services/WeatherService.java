@@ -1,7 +1,9 @@
 package com.myproject.journalApp.Services;
 
 
+import com.myproject.journalApp.Constants.Placeholders;
 import com.myproject.journalApp.api.response.WeatherResponce;
+import com.myproject.journalApp.cache.AppCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -15,16 +17,16 @@ public class WeatherService {
     @Value("${weather.api.key}")
     private String apiKey;
 
-    public static final String API = "http://api.weatherstack.com/current?access_key=API_KEY&query=CITY";
-
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private AppCache appCache;
+
     public  WeatherResponce getWeather (String city) {
-        String fianlApi = API.replace("CITY", city).replace("API_KEY", apiKey);
-        ResponseEntity<WeatherResponce> response = restTemplate.exchange(fianlApi, HttpMethod.GET, null, WeatherResponce.class);
-        WeatherResponce body = response.getBody();
-        return body;
+        String finalApi = appCache.getAppCache().get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.CITY, city).replace(Placeholders.API_KEY, apiKey);
+        ResponseEntity<WeatherResponce> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponce.class);
+        return response.getBody();
 
     }
 }
