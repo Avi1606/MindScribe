@@ -7,6 +7,7 @@ import com.myproject.journalApp.Services.WeatherService;
 import com.myproject.journalApp.api.response.WeatherResponce;
 import com.myproject.journalApp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserServices userservices;
+    private UserServices userservices;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    WeatherService weatherService;
+    private WeatherService weatherService;
 
 
     @PutMapping

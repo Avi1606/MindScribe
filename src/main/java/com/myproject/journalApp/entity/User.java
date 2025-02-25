@@ -1,5 +1,6 @@
 package com.myproject.journalApp.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor  // Add this to allow creation without parameters
+@AllArgsConstructor
 @Document(collection = "users")
 public class User {
     @Id
@@ -20,6 +22,8 @@ public class User {
 
     @Indexed(unique = true)
     private String username;
+    private String email;
+    private boolean sentimentalAnaylysis;
 
     private String password;
     @DBRef
