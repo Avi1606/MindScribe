@@ -24,6 +24,7 @@ public class UserServices {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
 //    private static final Logger logger = LoggerFactory.getLogger(UserServices.class);  use slfj4 annotation
 
     public void SaveNewUser(User user) {
