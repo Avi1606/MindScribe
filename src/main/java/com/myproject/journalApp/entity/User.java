@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor  // Add this to allow creation without parameters
 @AllArgsConstructor
+
 @Document(collection = "users")
 public class User {
     @Id

@@ -36,6 +36,7 @@ public class UserController {
         if (userindb != null) {
             userindb.setPassword(user.getPassword());
             userindb.setUsername(user.getUsername());
+            userindb.setEmail(user.getEmail());
             userservices.SaveNewUser(userindb);
         }
         return new ResponseEntity<>("User Successfully Updated",HttpStatus.ACCEPTED);
