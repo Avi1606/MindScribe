@@ -1,0 +1,65 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: Journaldb
+      auto-index-creation: true
+  radis:
+#    host: localhost
+#    port: 6379
+    uri : ${REDIS_URI}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+#  kafka:
+#    bootstrap-servers: pkc-xrnwx.asia-south2.gcp.confluent.cloud:9092
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#    consumer:
+#      group-id: weekly-sentiment-group
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring.json.trusted.packages: com.myproject.journalApp.model
+#    properties:
+#      sasl:
+#        mechanism: PLAIN
+#        jaas:
+#          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='ACMC22NY7QE2OY6S' password='TUpf/KWbezS40OMcZIJ0yhBZjz0QtGFphh5FXcr8OZrkzLmBCF6PQyfu0VQzEgBK';
+#      security:
+#        protocol: SASL_SSL
+#      session.timeout.ms: 30000
+#      max.poll.interval.ms: 300000
+#      heartbeat.interval.ms: 3000
+#      client.dns.lookup: use_all_dns_ips
+#      request.timeout.ms: 20000
+#      retry.backoff.ms: 500
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journalapp
+
+weather:
+  api:
+    key: ${WEATHER_APIKEY}
+
+
+
+
+
+
+
+
