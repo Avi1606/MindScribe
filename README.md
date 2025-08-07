@@ -1,4 +1,4 @@
-# Journal Application REST API
+# MindScribe
 
 This repository contains a Spring Boot project for a Journal Application REST API. The application enables users to manage their journal entries by providing endpoints for creating, reading, updating, and deleting entries.
 
